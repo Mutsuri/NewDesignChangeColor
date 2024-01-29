@@ -13,27 +13,12 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import styled from 'styled-components';
 
-interface ColoredBoxProps {
-  width?: string;
-  height?: string;
-  color?: string;
-  clicked?: boolean;
+interface ButtonStyle {
+  border: string;
+  color: string;
+  background: string;
+  marginRight: string;
 }
-
-const CustomButton = styled.div<ColoredBoxProps>`
-&& {
-  width: ${(props) => props.width || '200px'};
-  height: ${(props) => props.height || '150px'};
-  background-color: ${(props) => props.color || 'red'};
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  cursor: pointer;
-  border: ${(props) => (props.clicked ? '0px solid red' : '2px solid red')};
-}
-`;
 
 const ColorPicker: React.FC = () => {
   const store = useColorStore((state) => ({
@@ -174,16 +159,6 @@ const ColorPicker: React.FC = () => {
       alert('Please select a valid PNG file.');
     }
   };
-
-    const [clickedBox, setClickedBox] = useState<number | null>(null);
-
-    const handleBoxClick = (boxIndex: number) => {
-        if (clickedBox === boxIndex) {
-          setClickedBox(null);
-        } else {
-          setClickedBox(boxIndex);
-        }
-    };
 
   return (
     <>

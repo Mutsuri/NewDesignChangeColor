@@ -3,48 +3,115 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-function Test() {
+interface ButtonStyle {
+  border: string;
+  color: string;
+  background: string;
+  marginRight: string;
+}
+
+function App() {
+  const [buttonAStyle, setButtonAStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'inherit',
+    background: 'transparent',
+    marginRight: '10px',
+  });
+
+  const [buttonBStyle, setButtonBStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'inherit',
+    background: 'transparent',
+    marginRight: '10px',
+  });
+
+  const [buttonCStyle, setButtonCStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'inherit',
+    background: 'transparent',
+    marginRight: '10px',
+  });
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [anchorEl2, setAnchorEl2] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl2(event.currentTarget);
-  };
-
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleClose2 = () => {
-    setAnchorEl2(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
   };
 
   const open = Boolean(anchorEl);
-  const open2 = Boolean(anchorEl2);
   const id = open ? 'simple-popover' : undefined;
-  const id2 = open2 ? 'simple-popover2' : undefined;
 
+  const handleButtonClick = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick(event);
+  };
+  
   return (
-    <>
+    <div>
       <Button
-        key={1}
-        aria-describedby={id}
         variant="outlined"
-        onClick={handleClick}
-        style={{
-          color: "inherit",
-          border: open ? "3px solid red" : "0px solid red",
-          height: "100%",
-          width: "100%",
-          backgroundPosition: "center",
-          backgroundSize: 'cover',
-        }}
+        style={buttonAStyle}
+        onClick={(event) => handleButtonClick(buttonAStyle, setButtonAStyle, [
+          { style: buttonBStyle, setter: setButtonBStyle },
+          { style: buttonCStyle, setter: setButtonCStyle },
+        ], event)}
       >
-        Open Popover 1
+        A
+      </Button>
+      <Button
+        variant="outlined"
+        style={buttonBStyle}
+        onClick={(event) => handleButtonClick(buttonBStyle, setButtonBStyle, [
+          { style: buttonAStyle, setter: setButtonAStyle },
+          { style: buttonCStyle, setter: setButtonCStyle },
+        ], event)}
+      >
+        B
+      </Button>
+      <Button
+        variant="outlined"
+        style={buttonCStyle}
+        onClick={(event) => handleButtonClick(buttonCStyle, setButtonCStyle, [
+          { style: buttonAStyle, setter: setButtonAStyle },
+          { style: buttonBStyle, setter: setButtonBStyle },
+        ], event)}
+      >
+        C
       </Button>
       <Popover
         id={id}
@@ -56,40 +123,11 @@ function Test() {
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }}>Content of Popover 1.</Typography>
+        <Typography sx={{ p: 2 }}>Content of the Popover.</Typography>
       </Popover>
-
-      <Button
-        key={2}
-        aria-describedby={id2}
-        variant="outlined"
-        onClick={handleClick2}
-        style={{
-          color: "inherit",
-          border: open2 ? "0px solid red" : "3px solid red",
-          height: "100%",
-          width: "100%",
-          backgroundPosition: "center",
-          backgroundSize: 'cover',
-          marginTop: '10px'
-        }}
-      >
-        Open Popover 2
-      </Button>
-      <Popover
-        id={id2}
-        open={open2}
-        anchorEl={anchorEl2}
-        onClose={handleClose2}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Typography sx={{ p: 2 }}>Content of Popover 2.</Typography>
-      </Popover>
-    </>
+    </div>
   );
 }
 
-export default Test;
+export default App;
+
