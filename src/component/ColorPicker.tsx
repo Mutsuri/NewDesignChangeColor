@@ -193,8 +193,6 @@ const ColorPicker: React.FC = () => {
     anchorIndex: number,
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
-    const isSameButton = buttonStyle.border === "2px solid red";
 
     setButtonStyle((prevStyle) => ({
       ...prevStyle,
