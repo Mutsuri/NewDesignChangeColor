@@ -11,13 +11,24 @@ import {
   Popover,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import styled from 'styled-components';
+import '../styles/ColorPickerStyle.css'
+import CurrentDate from "../container/DayTime";
+import ImageHandler from "../container/ImageHandler";
 
 interface ButtonStyle {
   border: string;
   color: string;
   background: string;
   marginRight: string;
+  height?: string;
+  width?: string;
+  backgroundPosition?: string;
+  backgroundSize?: string;
+  fontSize: string;
+  borderRadius: string;
+  textTransform: "none",
+  marginTop: string;
+  marginLeft: string; 
 }
 
 const ColorPicker: React.FC = () => {
@@ -80,272 +91,919 @@ const ColorPicker: React.FC = () => {
   }));
 
   const [selectedFloor, setSelectedFloor] = useState<string>("");
-  const handleFloorChange = (event: SelectChangeEvent<string>) => {
-    const value = event.target.value;
-    setSelectedFloor(value);
-  };
-
   const [selectedResidence, setSelectedResidence] = useState<string>("");
-  const handleResidenceChange = (event: SelectChangeEvent<string>) => {
+  const [selectedUser, setSelectedUser] = useState<string>("member");
+  
+  const handleSelectChange = (key: string) => (event: SelectChangeEvent<string>) => {
     const value = event.target.value;
-    setSelectedResidence(value);
+    switch (key) {
+      case 'floor':
+        setSelectedFloor(value);
+        break;
+      case 'residence':
+        setSelectedResidence(value);
+        break;
+      case 'user':
+        setSelectedUser(value);
+        break;
+      default:
+        break;
+    }
   };
 
-  const [selectedUser, setSelectedUser] = useState<string>("");
-  const handleUserChange = (event: SelectChangeEvent<string>) => {
-    const value = event.target.value;
-    setSelectedUser(value);
-  };
+  const [buttonAStyle, setButtonAStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'inherit',
+    height: "100%",
+    width: "100%",
+    background: 'transparent',
+    marginRight: '10px',
+    backgroundPosition: "center",
+    backgroundSize: 'cover',
+    fontSize: "",
+    borderRadius: "0px",
+    textTransform: "none",
+    marginTop: "1px",
+    marginLeft: "0px",
+  });
 
-  // pop แรก
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+  const [buttonBStyle, setButtonBStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'inherit',
+    height: "655px",
+    width: "510px",
+    background: 'transparent',
+    marginRight: '10px',
+    backgroundSize: 'cover',
+    backgroundPosition: "center",
+    fontSize: "",
+    borderRadius: "0px",
+    textTransform: "none",
+    marginTop: "0px",
+    marginLeft: "0px",
+  });
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const [buttonCStyle, setButtonCStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'white',
+    marginRight: '10px',
+    width: "180px",
+    height: "50px",
+    fontSize: "14px",
+    background: "linear-gradient(to bottom, #331098 2%, #FFB258 100%)",
+    borderRadius: "40px",
+    textTransform: "none",
+    marginTop: "0px",
+    marginLeft: "0px",
+  });
+
+  const [buttonDStyle, setButtonDStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'null',
+    marginRight: '10px',
+    fontSize: "14px",
+    background: "null",
+    textTransform: "none",
+    height: "40px",
+    width: "50px",
+    marginTop: "5px",
+    marginLeft: "30px",
+    borderRadius: "20px 0 0 20px",
+  });
+
+  const [buttonEStyle, setButtonEStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'white',
+    marginRight: '10px',
+    fontSize: "14px",
+    background: "null",
+    textTransform: "none",
+    height: "40px",
+    width: "50px",
+    marginTop: "5px",
+    marginLeft: "-6px",
+    borderRadius: "0 20px 20px 0",
+  });
+
+  const [buttonFStyle, setButtonFStyle] = useState<ButtonStyle>({
+    border: '2px solid red',
+    color: 'null',
+    marginRight: '0px',
+    fontSize: "14px",
+    background: "null",
+    textTransform: "none",
+    height: "45px",
+    width: "126px",
+    marginTop: "10px",
+    marginLeft: "10px",
+    borderRadius: "0px",
+  });
+
+  const [buttonGStyle, setButtonGStyle] = useState<ButtonStyle>({
+    color: 'null',
+    marginRight: '0px',
+    fontSize: "14px",
+    background: "null",
+    textTransform: "none",
+    marginTop: "0px",
+    marginLeft: "0px",
+    borderRadius: "0px",
+    border: '2px solid red',
+    width: '250px',
+    height: '347px',
+  });
+
+  const [buttonHStyle, setButtonHStyle] = useState<ButtonStyle>({
+    color: 'null',
+    marginRight: '0px',
+    fontSize: "14px",
+    background: "null",
+    textTransform: "none",
+    marginTop: "20px",
+    marginLeft: "0px",
+    borderRadius: "0px",
+    border: '2px solid red',
+    width: "30px",
+    height: "50px",
+
+  });
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [anchorE2, setAnchorE2] = useState<HTMLButtonElement | null>(null);
+  const [anchorE3, setAnchorE3] = useState<HTMLButtonElement | null>(null);
+  const [anchorE4, setAnchorE4] = useState<HTMLButtonElement | null>(null);
+  const [anchorE5, setAnchorE5] = useState<HTMLButtonElement | null>(null);
+  const [anchorE6, setAnchorE6] = useState<HTMLButtonElement | null>(null);
+  const [anchorE7, setAnchorE7] = useState<HTMLButtonElement | null>(null);
+  const [anchorE8, setAnchorE8] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick1 = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE2(event.currentTarget);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const handleClick3 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE3(event.currentTarget);
+  };
 
-  const [anchorEl2, setAnchorEl2] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+  const handleClick4 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE4(event.currentTarget);
+  };
 
-  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl2(event.currentTarget);
+  const handleClick5 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE5(event.currentTarget);
+  };
+
+  const handleClick6 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE6(event.currentTarget);
+  };
+
+  const handleClick7 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE7(event.currentTarget);
+  };
+
+  const handleClick8 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE8(event.currentTarget);
+  };
+
+  const handleClose1 = () => {
+    setAnchorEl(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
   };
 
   const handleClose2 = () => {
-    setAnchorEl2(null);
+    setAnchorE2(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
   };
 
-  const open2 = Boolean(anchorEl2);
-  const id2 = open ? "simple-popover2" : undefined;
-
-  const [image, setImage] = useState<string | null>(null);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
-
-    if (selectedFile && selectedFile.type.startsWith('image/png')) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(selectedFile);
-    } else {
-      alert('Please select a valid PNG file.');
-    }
+  const handleClose3 = () => {
+    setAnchorE3(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
   };
 
-  const [image2, setImage2] = useState<string | null>(null);
+  const handleClose4 = () => {
+    setAnchorE4(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+  };
 
-  const handleFileChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile2 = event.target.files && event.target.files[0];
+  const handleClose5 = () => {
+    setAnchorE5(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+  };
 
-    if (selectedFile2 && selectedFile2.type.startsWith('image/png')) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage2(reader.result as string);
-      };
-      reader.readAsDataURL(selectedFile2);
-    } else {
-      alert('Please select a valid PNG file.');
-    }
+  const handleClose6 = () => {
+    setAnchorE6(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+  };
+
+  const handleClose7 = () => {
+    setAnchorE7(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+  };
+
+  const handleClose8 = () => {
+    setAnchorE8(null);
+    setButtonAStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonBStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonCStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonDStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonEStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonFStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonGStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+    setButtonHStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+  };
+
+  const open1 = Boolean(anchorEl);
+  const id1 = open1 ? 'simple-popover' : undefined;
+
+  const open2 = Boolean(anchorE2);
+  const id2 = open2 ? 'simple-popover' : undefined;
+
+  const open3 = Boolean(anchorE3);
+  const id3 = open3 ? 'simple-popover' : undefined;
+
+  const open4 = Boolean(anchorE4);
+  const id4 = open4 ? 'simple-popover' : undefined;
+
+  const open5 = Boolean(anchorE5);
+  const id5 = open5 ? 'simple-popover' : undefined;
+
+  const open6 = Boolean(anchorE6);
+  const id6 = open6 ? 'simple-popover' : undefined;
+
+  const open7 = Boolean(anchorE7);
+  const id7 = open7 ? 'simple-popover' : undefined;
+
+  const open8 = Boolean(anchorE8);
+  const id8 = open8 ? 'simple-popover' : undefined;
+
+  const handleButtonClick = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick1(event);
+  };
+
+  const handleButtonClick2 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick2(event);
+  };
+
+  const handleButtonClick3 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick3(event);
+  };
+
+  const handleButtonClick4 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick4(event);
+  };
+
+  const handleButtonClick5 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick5(event);
+  };
+
+  const handleButtonClick6 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick6(event);
+  };
+
+  const handleButtonClick7 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick7(event);
+  };
+
+  const handleButtonClick8 = (
+    buttonStyle: ButtonStyle,
+    setButtonStyle: React.Dispatch<React.SetStateAction<ButtonStyle>>,
+    otherButtonStyles: { style: ButtonStyle; setter: React.Dispatch<React.SetStateAction<ButtonStyle>> }[],
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // ตรวจสอบว่าปุ่มที่ถูกกดเป็นปุ่มที่มี border เป็น 2px solid red หรือไม่
+    const isSameButton = buttonStyle.border === '2px solid red';
+
+    setButtonStyle((prevStyle) => ({
+      ...prevStyle,
+      border: '2px solid red',
+    }));
+
+    otherButtonStyles.forEach(({ style, setter }) => {
+      setter((prevStyle) => ({
+        ...prevStyle,
+        border: '0px solid red',
+      }));
+    });
+
+    handleClick8(event);
+  };
+
+  const [LogoImage, setLogoImage] = useState<string | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+
+  const handleLogoImageChange = (image: string | null) => {
+    setLogoImage(image);
+  };
+
+  const handleBackgroundImageChange = (image: string | null) => {
+    setBackgroundImage(image);
   };
 
   return (
     <>
-      {/* <Grid container spacing={2}> */}
-      {/* <Grid item xs={5} style={{ height: '780px'}} >
-            <Paper style={{height: '700px', padding: '20px', boxShadow: 'none', overflowY: 'auto'}} >
-                <label>Main Background Color</label>
-                <ColorPickerTab label="" color={store.mainBackgroundColor} onChange={store.setMainBackgroundColor} />
-                <label>Background Color</label>
-                <ColorPickerTab label="" color={store.background} onChange={store.setBackground} />
-                <label>Bottom Background Color</label>
-                <ColorPickerTab label="" color={store.bottomBackgroundColor} onChange={store.setBottomBackgroundColor} />
-                
-                <label>In Component Color</label>
-                <ColorPickerTab label="" color={store.inComponent} onChange={store.setInComponent} />
-                <label>Text On Main Background Color</label>
-                <ColorPickerTab label="" color={store.textOnMainBackground} onChange={store.setTextOnMainBackground} />
-                <label>Text On Background Color</label>
-                <ColorPickerTab label="" color={store.textOnBackground} onChange={store.setTextOnBackground} />
-
-                <label>Theme Color End</label>
-                <ColorPickerTab label="" color={store.themeColorEnd} onChange={store.setThemeColorEnd} />
-                <label>Theme Color Start</label>
-                <ColorPickerTab label="" color={store.themeColorStart} onChange={store.setThemeColorStart} />
-                <label>Text Button Color</label>
-                <ColorPickerTab label="" color={store.textButton} onChange={store.setTextButton} />
-
-                <label>Idel Color End</label>
-                <ColorPickerTab label="" color={store.ideColorEnd} onChange={store.setIdeColorEnd} />
-                <label>Idel Color Start</label>
-                <ColorPickerTab label="" color={store.idelColorStart} onChange={store.setIdelColorStart} />
-                <label>In Use Color Start</label>
-                <ColorPickerTab label="" color={store.inUseColorStart} onChange={store.setInUseColorStart} />
-                <label>In Use Color End</label>
-                <ColorPickerTab label="" color={store.inUseColorEnd} onChange={store.setInUseColorEnd} />
-                <label>Text In Lang Button In Use Color</label>
-                <ColorPickerTab label="" color={store.textInLangBtInUse} onChange={store.setTextInLangBtInUse} />
-                <label>Text In Lang Button Idel Color</label>
-                <ColorPickerTab label="" color={store.textInLangBtIdel} onChange={store.setTextInLangBtIdel} />
-
-                <label>Spinner Color</label>
-                <ColorPickerTab label="" color={store.spinnerColor} onChange={store.setSpinnerColor} />
-                <label>Spinner Popup Color</label>
-                <ColorPickerTab label="" color={store.spinnerPopupColor} onChange={store.setSpinnerPopupColor} />
-
-                <label>Button Pin Color End</label>
-                <ColorPickerTab label="" color={store.btPinColorEnd} onChange={store.setBtPinColorEnd} />
-                <label>Button Pin Color Start</label>
-                <ColorPickerTab label="" color={store.btPinColorStart} onChange={store.setBtPinColorStart} />
-                <label>Pin Input Color</label>
-                <ColorPickerTab label="" color={store.pinInputColor} onChange={store.setPinInputColor} />
-
-                <label>Ic Locker Tint Color</label>
-                <ColorPickerTab label="" color={store.icLockerTint} onChange={store.setIcLockerTint} />
-            </Paper>
-          </Grid> */}
-
-      <Paper
-        style={{
-          height: "760px",
-          padding: "20px",
-          boxShadow: "none",
-          borderRadius: "10px",
-          display: "grid",
-          placeItems: "center",
-        }}
-      >
-        <div
-          style={{
-            height: "740px",
-            width: "510px",
-            backgroundColor: `rgba(${store.background.r}, ${store.background.g}, ${store.background.b}, ${store.background.a})`,
-          }}
-        >
-          <div
-            style={{
-              height: "85px",
-              width: "510px",
-              backgroundColor: `rgba(${store.mainBackgroundColor.r}, ${store.mainBackgroundColor.g}, ${store.mainBackgroundColor.b}, ${store.mainBackgroundColor.a})`,
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <div
-              style={{
-                // backgroundColor: 'red',
-                height: "85px",
-                width: "170px",
-              }}
-            ></div>
-
-            <div
-              style={{
-                height: "85px",
-                width: "170px",
-              }}
-            >
+      <Paper className="paperContainer">
+        <div style={{ backgroundColor: `rgba(${store.background.r}, ${store.background.g}, ${store.background.b}, ${store.background.a})` }}>
+          <div className="header" style={{ backgroundColor: `rgba(${store.mainBackgroundColor.r}, ${store.mainBackgroundColor.g}, ${store.mainBackgroundColor.b}, ${store.mainBackgroundColor.a})` }}>
+            {/* Date and Time */}
+            <div className="timeBox">
+              <div className="timeStyle" style={{ color: `rgba(${store.textOnMainBackground.r}, ${store.textOnMainBackground.g}, ${store.textOnMainBackground.b}, ${store.textOnMainBackground.a})` }}>
+                <CurrentDate />
+              </div>
               <Button
-                key={1}
-                aria-describedby={id}
+                aria-describedby={id7}
                 variant="outlined"
                 style={{
-                  color: "inherit",
-                  border: "3px solid red",
-                  height: "100%",
-                  width: "100%",
-                  backgroundPosition: "center",
-                  backgroundSize: 'cover',
-                  backgroundImage: image ? `url(${image})` : 'none',
+                  ...buttonFStyle
                 }}
-                onClick={handleClick}
-              ></Button>
+                onClick={(event) => handleButtonClick7(buttonFStyle, setButtonFStyle, [
+                  { style: buttonAStyle, setter: setButtonAStyle },
+                  { style: buttonBStyle, setter: setButtonBStyle },
+                  { style: buttonCStyle, setter: setButtonCStyle },
+                  { style: buttonDStyle, setter: setButtonDStyle },
+                  { style: buttonEStyle, setter: setButtonEStyle },
+                  { style: buttonGStyle, setter: setButtonGStyle },
+                  { style: buttonHStyle, setter: setButtonHStyle },
+                ], event)}
+              >
+              </Button>
               <Popover
-                id={id}
-                open={open}
+                id={id7}
+                open={open7}
+                anchorEl={anchorE7}
+                anchorReference="anchorPosition"
+                anchorPosition={{ top: 120, left: 1260 }}
+                onClose={handleClose7}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}>
+                <div className="popOverTextOnMainBackground">
+                  <div className="popOverMarginStyle">
+                    <div className="popOverBetweenTag">
+                      <label>Text On Main Background Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.textOnMainBackground} onChange={store.setTextOnMainBackground} />
+                  </div>
+                </div>
+              </Popover>
+            </div>
+
+            {/* Logo */}
+            <div className="logoBox">
+              <Button
+                key={1}
+                aria-describedby={id1}
+                variant="outlined"
+                style={{
+                  ...buttonAStyle,
+                  backgroundImage: `url(${LogoImage})`
+                }}
+                onClick={(event) => handleButtonClick(buttonAStyle, setButtonAStyle, [
+                  { style: buttonBStyle, setter: setButtonBStyle },
+                  { style: buttonCStyle, setter: setButtonCStyle },
+                  { style: buttonDStyle, setter: setButtonDStyle },
+                  { style: buttonEStyle, setter: setButtonEStyle },
+                  { style: buttonFStyle, setter: setButtonFStyle },
+                  { style: buttonGStyle, setter: setButtonGStyle },
+                  { style: buttonHStyle, setter: setButtonHStyle },
+                ], event)}>
+              </Button>
+              <Popover
+                id={id1}
+                open={open1}
                 anchorReference="anchorPosition"
                 anchorPosition={{ top: 120, left: 1260 }}
                 anchorEl={anchorEl}
-                onClose={handleClose}
+                onClose={handleClose1}
                 anchorOrigin={{
                   vertical: "bottom",
                   horizontal: "left",
                 }}
               >
-                <div style={{
-                  height: '50px',
-                  width: '550px',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <input style={{ marginLeft: '18px' }} type="file" accept=".png" onChange={handleFileChange} />
+                <div className="popOverLogo">
+                  <div className="popOverMarginStyle">
+                    <div className="popOverBetweenTag">
+                      <ImageHandler onImageChange={handleLogoImageChange} />
+                    </div>
+                    <div className="popOverBetweenTag">
+                      <label>Main Background Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.mainBackgroundColor} onChange={store.setMainBackgroundColor} />
+                  </div>
                 </div>
               </Popover>
             </div>
 
             {/* Change Language */}
-            <div
-              style={{
-                height: "85px",
-                width: "170px",
-                display: 'flex',
-              }}
-            >
-              <div
+            <div className="changeLanguageBox">
+              <Button
+                aria-describedby={id5}
+                variant="outlined"
                 style={{
-                  height: "40px",
-                  width: "50px",
-                  marginTop: "5px",
-                  marginLeft: "60px",
-                  borderRadius: "20px 0 0 20px",
-                  backgroundColor: `rgba(${store.idelColorStart.r}, ${store.idelColorStart.g}, ${store.idelColorStart.b}, ${store.idelColorStart.a})`,
+                  ...buttonDStyle,
+                  background: `linear-gradient(to top, rgba(${store.idelColorStart.r}, ${store.idelColorStart.g}, ${store.idelColorStart.b}, ${store.idelColorStart.a}), rgba(${store.ideColorEnd.r}, ${store.ideColorEnd.g}, ${store.ideColorEnd.b}, ${store.ideColorEnd.a}))`,
+                  color: `rgba(${store.textInLangBtIdel.r}, ${store.textInLangBtIdel.g}, ${store.textInLangBtIdel.b}, ${store.textInLangBtIdel.a})`,
                 }}
-              ></div>
-              <div
+                onClick={(event) => handleButtonClick5(buttonDStyle, setButtonDStyle, [
+                  { style: buttonAStyle, setter: setButtonAStyle },
+                  { style: buttonBStyle, setter: setButtonBStyle },
+                  { style: buttonCStyle, setter: setButtonCStyle },
+                  { style: buttonEStyle, setter: setButtonEStyle },
+                  { style: buttonFStyle, setter: setButtonFStyle },
+                  { style: buttonGStyle, setter: setButtonGStyle },
+                  { style: buttonHStyle, setter: setButtonHStyle },
+                ], event)}
+              >TH
+              </Button>
+              <Popover
+                id={id5}
+                open={open5}
+                anchorEl={anchorE5}
+                anchorReference="anchorPosition"
+                anchorPosition={{ top: 120, left: 1260 }}
+                onClose={handleClose5}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}>
+                <div className="popOverChangeLanguage">
+                  <div className="popOverMarginStyle">
+                    <div className="popOverBetweenTag">
+                      <label>Idel Color End</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.ideColorEnd} onChange={store.setIdeColorEnd} />
+                    <div className="popOverBetweenTag">
+                      <label>Idel Color Start</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.idelColorStart} onChange={store.setIdelColorStart} />
+                    <div className="popOverBetweenTag">
+                      <label>Text In Lang Button Idel Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.textInLangBtIdel} onChange={store.setTextInLangBtIdel} />
+                  </div>
+                </div>
+              </Popover>
+
+              <Button
+                aria-describedby={id6}
+                variant="outlined"
                 style={{
-                  height: "40px",
-                  width: "50px",
-                  marginTop: "5px",
-                  marginLeft: "5px",
-                  borderRadius: "0 20px 20px 0",
+                  ...buttonEStyle,
                   background: `linear-gradient(to top, rgba(${store.inUseColorStart.r}, ${store.inUseColorStart.g}, ${store.inUseColorStart.b}, ${store.inUseColorStart.a}), rgba(${store.inUseColorEnd.r}, ${store.inUseColorEnd.g}, ${store.inUseColorEnd.b}, ${store.inUseColorEnd.a}))`,
+                  color: `rgba(${store.textInLangBtInUse.r}, ${store.textInLangBtInUse.g}, ${store.textInLangBtInUse.b}, ${store.textInLangBtInUse.a})`,
                 }}
-              ></div>
+                onClick={(event) => handleButtonClick6(buttonEStyle, setButtonEStyle, [
+                  { style: buttonAStyle, setter: setButtonAStyle },
+                  { style: buttonBStyle, setter: setButtonBStyle },
+                  { style: buttonCStyle, setter: setButtonCStyle },
+                  { style: buttonDStyle, setter: setButtonDStyle },
+                  { style: buttonFStyle, setter: setButtonFStyle },
+                  { style: buttonGStyle, setter: setButtonGStyle },
+                  { style: buttonHStyle, setter: setButtonHStyle },
+                ], event)}
+              >EN
+              </Button>
+              <Popover
+                id={id6}
+                open={open6}
+                anchorEl={anchorE6}
+                anchorReference="anchorPosition"
+                anchorPosition={{ top: 120, left: 1260 }}
+                onClose={handleClose6}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}>
+                <div className="popOverChangeLanguage">
+                  <div className="popOverMarginStyle">
+                    <div className="popOverBetweenTag">
+                      <label>In Use Color Start</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.inUseColorStart} onChange={store.setInUseColorStart} />
+                    <div className="popOverBetweenTag">
+                      <label>In Use Color End</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.inUseColorEnd} onChange={store.setInUseColorEnd} />
+                    <div className="popOverBetweenTag">
+                      <label>Text In Lang Button In Use Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.textInLangBtInUse} onChange={store.setTextInLangBtInUse} />
+                  </div>
+                </div>
+              </Popover>
             </div>
           </div>
-
-          <div style={{ width: '510px', height: '655px', position: 'relative' }} >
-            <div style={{ position: 'absolute', width: '510px', height: '655px' }} >
+          
+          {/* body */}
+          <div className="body" >
+            <div className="backgroundStyle" >
               <Button
                 aria-describedby={id2}
                 variant="outlined"
                 style={{
-                  color: "inherit",
-                  border: "3px solid red",
-                  height: "655px",
-                  width: "510px",
-                  backgroundSize: 'cover',
-                  backgroundImage: image2 ? `url(${image2})` : 'none',
-                  backgroundPosition: "center",
+                  ...buttonBStyle,
+                  backgroundImage: `url(${backgroundImage})`
                 }}
-                onClick={handleClick2}
+                onClick={(event) => handleButtonClick2(buttonBStyle, setButtonBStyle, [
+                  { style: buttonAStyle, setter: setButtonAStyle },
+                  { style: buttonCStyle, setter: setButtonCStyle },
+                  { style: buttonDStyle, setter: setButtonDStyle },
+                  { style: buttonEStyle, setter: setButtonEStyle },
+                  { style: buttonFStyle, setter: setButtonFStyle },
+                  { style: buttonGStyle, setter: setButtonGStyle },
+                  { style: buttonHStyle, setter: setButtonHStyle },
+                ], event)}
               >
               </Button>
               <Popover
                 id={id2}
                 open={open2}
-                anchorEl={anchorEl2}
+                anchorEl={anchorE2}
                 anchorReference="anchorPosition"
                 anchorPosition={{ top: 200, left: 1260 }}
                 onClose={handleClose2}
@@ -353,262 +1011,283 @@ const ColorPicker: React.FC = () => {
                   vertical: "bottom",
                   horizontal: "left",
                 }}>
-                <div style={{
-                  height: '380px',
-                  width: '550px',
-                  display: 'flex',
-                  flexDirection: "column",
-                }}>
-                  <div style={{ marginLeft: '20px', marginTop: '20px' }}>
-                    <div style={{ marginBottom: '10px' }}>
-                      <input type="file" accept=".png" onChange={handleFileChange2} />
+                <div className="popOverBackground">
+                  <div className="popOverMarginStyle">
+                    <div className="popOverBetweenTag">
+                      <ImageHandler onImageChange={handleBackgroundImageChange} />
                     </div>
-                    <div style={{ marginBottom: '10px' }}>
+                    <div className="popOverBetweenTag">
                       <label>Background Color</label>
                     </div>
-                    <div>
-                      <ColorPickerTab label="" color={store.background} onChange={store.setBackground} />
-                    </div>
+                    <ColorPickerTab label="" color={store.background} onChange={store.setBackground} />
                   </div>
                 </div>
               </Popover>
             </div>
-            <div>
-              <div
+            {/* ครึ่งบน */}
+            <div className="formControlBox">
+              <Button
+                aria-describedby={id2}
+                variant="outlined"
+                className="verifyPasscodeBox"
                 style={{
-                  width: "510px",
-                  height: "60px",
-                  display: "flex",
-                  justifyContent: "center",
+                  ...buttonGStyle,
                 }}
-              >
-                <text
-                  style={{
-                    color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})`,
-                    fontSize: "24px",
-                    marginTop: "10px",
-                  }}
-                >
-                  Verify passcode
-                </text>
-                <br />
-              </div>
+                onClick={(event) => handleButtonClick8(buttonGStyle, setButtonGStyle, [
+                  { style: buttonAStyle, setter: setButtonAStyle },
+                  { style: buttonBStyle, setter: setButtonBStyle },
+                  { style: buttonCStyle, setter: setButtonCStyle },
+                  { style: buttonDStyle, setter: setButtonDStyle },
+                  { style: buttonEStyle, setter: setButtonEStyle },
+                  { style: buttonFStyle, setter: setButtonFStyle },
+                ], event)}>
+                <div className="verifyPasscodeBox">
+                  <text className="verifyPasscodeTextStyle" style={{ color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})` }}>
+                    Verify passcode
+                  </text>
+                </div>
 
-              <div
-                style={{
-                  width: "510px",
-                  height: "80px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "5px",
-                }}
-              >
-                <text
-                  style={{
-                    color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})`,
-                    fontSize: "18px",
-                  }}
-                >
-                  Select Floor
-                </text>
-                <FormControl sx={{ minWidth: "14rem" }}>
-                  <Select
-                    value={selectedFloor}
-                    onChange={handleFloorChange}
-                    style={{
-                      backgroundColor: selectedFloor
-                        ? `rgba(${store.spinnerPopupColor.r}, ${store.spinnerPopupColor.g}, ${store.spinnerPopupColor.b}, ${store.spinnerPopupColor.a})`
-                        : `rgba(${store.spinnerColor.r}, ${store.spinnerColor.g}, ${store.spinnerColor.b}, ${store.spinnerColor.a})`,
-                      color: "white",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      width: "14rem",
-                      borderRadius: "20px 20px 0 0",
-                      overflow: "hidden",
-                      marginTop: "10px",
-                      height: "2rem",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>⠀</em>
-                    </MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+                <div className="selectFloorBox">
+                  <text className="selectFloorTextStyle" style={{ color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})` }}>
+                    Select Floor
+                  </text>
+                  <FormControl className="formControlStyle">
+                    <Select
+                      value={selectedFloor}
+                      onChange={handleSelectChange('floor')}
+                      className="selectedStyle selectedFloor"
+                      style={{
+                        fontWeight: 'bold',
+                        borderRadius: '20px 20px 0 0',
+                        backgroundColor: selectedFloor
+                          ? `rgba(${store.spinnerPopupColor.r}, ${store.spinnerPopupColor.g}, ${store.spinnerPopupColor.b}, ${store.spinnerPopupColor.a})`
+                          : `rgba(${store.spinnerColor.r}, ${store.spinnerColor.g}, ${store.spinnerColor.b}, ${store.spinnerColor.a})`,
+                        color: `rgba(${store.inComponent.r}, ${store.inComponent.g}, ${store.inComponent.b}, ${store.inComponent.a})`
+                      }}>
+                      <MenuItem value="">
+                        <em>⠀</em>
+                      </MenuItem>
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
 
-              <div
-                style={{
-                  width: "510px",
-                  height: "80px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: "5px",
-                }}
-              >
-                <text
-                  style={{
-                    color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})`,
-                    fontSize: "18px",
-                  }}
-                >
-                  Select Residence
-                </text>
-                <FormControl sx={{ minWidth: "14rem" }}>
-                  <Select
-                    value={selectedResidence}
-                    onChange={handleResidenceChange}
-                    style={{
-                      backgroundColor: selectedResidence
-                        ? `rgba(${store.spinnerPopupColor.r}, ${store.spinnerPopupColor.g}, ${store.spinnerPopupColor.b}, ${store.spinnerPopupColor.a})`
-                        : `rgba(${store.spinnerColor.r}, ${store.spinnerColor.g}, ${store.spinnerColor.b}, ${store.spinnerColor.a})`,
-                      color: "white",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      width: "14rem",
-                      overflow: "hidden",
-                      marginTop: "10px",
-                      height: "2rem",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>⠀</em>
-                    </MenuItem>
-                    <MenuItem value={"101"}>101</MenuItem>
-                    <MenuItem value={"102"}>102</MenuItem>
-                    <MenuItem value={"103"}>103</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+                <div className="selectResidentandUserBox">
+                  <text className="selectUserTextStyle" style={{ color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})` }}>
+                    Select Residence
+                  </text>
+                  <FormControl className="formControlStyle">
+                    <Select
+                      value={selectedResidence}
+                      onChange={handleSelectChange('residence')}
+                      className="selectedStyle selectedResidence"
+                      style={{
+                        fontWeight: 'bold',
+                        backgroundColor: selectedResidence
+                          ? `rgba(${store.spinnerPopupColor.r}, ${store.spinnerPopupColor.g}, ${store.spinnerPopupColor.b}, ${store.spinnerPopupColor.a})`
+                          : `rgba(${store.spinnerColor.r}, ${store.spinnerColor.g}, ${store.spinnerColor.b}, ${store.spinnerColor.a})`,
+                        color: `rgba(${store.inComponent.r}, ${store.inComponent.g}, ${store.inComponent.b}, ${store.inComponent.a})`
+                      }}>
+                      <MenuItem value=""><em>⠀</em></MenuItem>
+                      <MenuItem value={"101"}>101</MenuItem>
+                      <MenuItem value={"102"}>102</MenuItem>
+                      <MenuItem value={"103"}>103</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
 
-              <div
-                style={{
-                  width: "510px",
-                  height: "120px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <text
-                  style={{
-                    color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})`,
-                    fontSize: "18px",
-                  }}
-                >
-                  Select User
-                </text>
-                <FormControl sx={{ minWidth: "14rem" }}>
-                  <Select
-                    value={selectedUser}
-                    onChange={handleUserChange}
-                    style={{
-                      backgroundColor: selectedUser
-                        ? `rgba(${store.spinnerPopupColor.r}, ${store.spinnerPopupColor.g}, ${store.spinnerPopupColor.b}, ${store.spinnerPopupColor.a})`
-                        : `rgba(${store.spinnerColor.r}, ${store.spinnerColor.g}, ${store.spinnerColor.b}, ${store.spinnerColor.a})`,
-                      color: "white",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      width: "14rem",
-                      borderRadius: "0 0 20px 20px",
-                      overflow: "hidden",
-                      marginTop: "10px",
-                      height: "80px",
-                    }}
-                    renderValue={(selected) => (
-                      <div>
-                        <div style={{ marginBottom: "10px" }}>RESIDENT</div>
-                        <div>{selected}</div>
-                      </div>
-                    )}
-                  >
-                    <MenuItem value="">
-                      <em>⠀</em>
-                    </MenuItem>
-                    <MenuItem value="member">member</MenuItem>
-                    <MenuItem value="VIP">VIP</MenuItem>
-                    <MenuItem value="admin">admin</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+                <div className="selectResidentandUserBox">
+                  <text className="selectUserTextStyle"
+                    style={{ color: `rgba(${store.textOnBackground.r}, ${store.textOnBackground.g}, ${store.textOnBackground.b}, ${store.textOnBackground.a})` }}>
+                    Select User
+                  </text>
+                  <FormControl className="formControlStyle">
+                    <Select
+                      value={selectedUser}
+                      onChange={handleSelectChange('user')}
+                      className="selectedStyle selectedUser"
+                      style={{
+                        fontWeight: 'bold',
+                        borderRadius: '0 0 20px 20px',
+                        backgroundColor: selectedUser
+                          ? `rgba(${store.spinnerPopupColor.r}, ${store.spinnerPopupColor.g}, ${store.spinnerPopupColor.b}, ${store.spinnerPopupColor.a})`
+                          : `rgba(${store.spinnerColor.r}, ${store.spinnerColor.g}, ${store.spinnerColor.b}, ${store.spinnerColor.a})`,
+                        color: `rgba(${store.inComponent.r}, ${store.inComponent.g}, ${store.inComponent.b}, ${store.inComponent.a})`,
+                      }}
+                      renderValue={(selected) => (
+                        <div>
+                          <div className="popOverBetweenTag">RESIDENT</div>
+                          <div>{selected}</div>
+                        </div>
+                      )}>
+                      <MenuItem value=""><em>⠀</em></MenuItem>
+                      <MenuItem value="member">member</MenuItem>
+                      <MenuItem value="VIP">VIP</MenuItem>
+                      <MenuItem value="admin">admin</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </Button>
+              <Popover
+                id={id8}
+                open={open8}
+                anchorEl={anchorE8}
+                anchorReference="anchorPosition"
+                anchorPosition={{ top: 200, left: 1260 }}
+                onClose={handleClose8}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}>
+                <div className="popOverSelectFRU">
+                  <div className="popOverMarginStyle">
+                    <div className="popOverBetweenTag">
+                      <label>Text On Background Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.textOnBackground} onChange={store.setTextOnBackground} />
+                    <div className="popOverBetweenTag">
+                      <label>Spinner Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.spinnerColor} onChange={store.setSpinnerColor} />
+                    <div className="popOverBetweenTag">
+                      <label>Spinner Popup Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.spinnerPopupColor} onChange={store.setSpinnerPopupColor} />
+                    <div className="popOverBetweenTag">
+                      <label>In Component Color</label>
+                    </div>
+                    <ColorPickerTab label="" color={store.inComponent} onChange={store.setInComponent} />
+                  </div>
+                </div>
+              </Popover>
+            </div>
 
+            {/* ครึ่งล่าง */}
+            <div className="keyNumberandBottomBox">
               <KeyNumber />
+              <div className="bottomBox">
+                {/* Forget? Button */}
+                <div className="forgetButtonBox">
+                  <div className="forgetButtonBoxStyle" >
+                    <Button
+                      variant="contained"
+                      style={{
+                        ...buttonCStyle,
+                        background: `linear-gradient(to bottom, rgba(${store.themeColorStart.r}, ${store.themeColorStart.g}, ${store.themeColorStart.b}, ${store.themeColorStart.a}), rgba(${store.themeColorEnd.r}, ${store.themeColorEnd.g}, ${store.themeColorEnd.b}, ${store.themeColorEnd.a}))`,
+                        color: `rgba(${store.textButton.r}, ${store.textButton.g}, ${store.textButton.b}, ${store.textButton.a})`,
+                      }}
+                      onClick={(event) => handleButtonClick3(buttonCStyle, setButtonCStyle, [
+                        { style: buttonAStyle, setter: setButtonAStyle },
+                        { style: buttonBStyle, setter: setButtonBStyle },
+                        { style: buttonGStyle, setter: setButtonGStyle },
+                        { style: buttonDStyle, setter: setButtonDStyle },
+                        { style: buttonEStyle, setter: setButtonEStyle },
+                        { style: buttonFStyle, setter: setButtonFStyle },
+                        { style: buttonHStyle, setter: setButtonHStyle },
+                      ], event)}
+                    >
+                      Forget?
+                    </Button>
+                    <Popover
+                      id={id3}
+                      open={open3}
+                      anchorEl={anchorE3}
+                      anchorReference="anchorPosition"
+                      anchorPosition={{ top: 340, left: 110 }}
+                      onClose={handleClose3}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                      }}>
+                      <div className="popOverChangePasscodeandForgetButton">
+                        <div className="popOverMarginStyle">
+                          <div className="popOverBetweenTag">
+                            <label>Theme Color Start</label>
+                          </div>
+                          <ColorPickerTab label="" color={store.themeColorStart} onChange={store.setThemeColorStart} />
+                          <div className="popOverBetweenTag">
+                            <label>Theme Color End</label>
+                          </div>
+                          <ColorPickerTab label="" color={store.themeColorEnd} onChange={store.setThemeColorEnd} />
+                          <div className="popOverBetweenTag">
+                            <label>Text Button Color</label>
+                          </div>
+                          <ColorPickerTab label="" color={store.textButton} onChange={store.setTextButton} />
+                        </div>
+                      </div>
+                    </Popover>
+                  </div>
+                </div>
 
-              <div
-                style={{
-                  width: "510px",
-                  height: "70px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                }}
-              >
-
-                <div
-                  style={{
-                    width: "180px",
-                    height: "70px",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                  }}
-                >
+                {/* Home Icon */}
+                <div className="HomeIconBox">
                   <Button
-                    variant="contained"
-                    style={{
-                      width: "180px",
-                      height: "50px",
-                      fontSize: "14px",
-                      background: "linear-gradient(to bottom, #331098, #946197)",
-                      borderRadius: "40px",
-                      textTransform: "none",
-                    }}
-                  >
-                    Forget?
+                    aria-describedby={id2}
+                    variant="outlined"
+                    className="HomeIconButton"
+                    style={{ ...buttonHStyle }}
+                    onClick={(event) => handleButtonClick8(buttonGStyle, setButtonGStyle, [
+                      { style: buttonAStyle, setter: setButtonAStyle },
+                      { style: buttonBStyle, setter: setButtonBStyle },
+                      { style: buttonCStyle, setter: setButtonCStyle },
+                      { style: buttonDStyle, setter: setButtonDStyle },
+                      { style: buttonEStyle, setter: setButtonEStyle },
+                      { style: buttonFStyle, setter: setButtonFStyle },
+                    ], event)}>
+                    <HomeIcon className="homeIconStyle" style={{ color: "yellow", }} />
                   </Button>
                 </div>
 
-
-                <div
-                  style={{
-                    width: "53px",
-                    height: "70px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <HomeIcon
-                    style={{
-                      fontSize: "30px",
-                      color: "yellow",
-                    }}
-                  />
-                </div>
-
-                <div
-                  style={{
-                    width: "180px",
-                    height: "70px",
-                  }}
-                >
+                {/* Change passcode Button */}
+                <div className="changePasscodeButtonBoxStyle">
                   <Button
                     variant="contained"
                     style={{
-                      color: "white",
-                      borderRadius: "40px",
-                      width: "180px",
-                      height: "50px",
-                      fontSize: "14px",
-                      background: "linear-gradient(to bottom, #331098, #946197)",
-                      textTransform: "none",
+                      ...buttonCStyle,
+                      background: `linear-gradient(to bottom, rgba(${store.themeColorStart.r}, ${store.themeColorStart.g}, ${store.themeColorStart.b}, ${store.themeColorStart.a}), rgba(${store.themeColorEnd.r}, ${store.themeColorEnd.g}, ${store.themeColorEnd.b}, ${store.themeColorEnd.a}))`,
+                      color: `rgba(${store.textButton.r}, ${store.textButton.g}, ${store.textButton.b}, ${store.textButton.a})`
                     }}
-                  >
+                    onClick={(event) => handleButtonClick4(buttonCStyle, setButtonCStyle, [
+                      { style: buttonAStyle, setter: setButtonAStyle },
+                      { style: buttonBStyle, setter: setButtonBStyle },
+                      { style: buttonDStyle, setter: setButtonDStyle },
+                      { style: buttonEStyle, setter: setButtonEStyle },
+                      { style: buttonFStyle, setter: setButtonFStyle },
+                      { style: buttonGStyle, setter: setButtonGStyle },
+                      { style: buttonHStyle, setter: setButtonHStyle },
+                    ], event)}>
                     Change passcode
                   </Button>
+                  <Popover
+                    id={id4}
+                    open={open4}
+                    anchorEl={anchorE4}
+                    anchorReference="anchorPosition"
+                    anchorPosition={{ top: 340, left: 1260 }}
+                    onClose={handleClose4}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}>
+                    <div className="popOverChangePasscodeandForgetButton">
+                      <div className="popOverMarginStyle">
+                        <div className="popOverBetweenTag">
+                          <label>Theme Color Start</label>
+                        </div>
+                        <ColorPickerTab label="" color={store.themeColorStart} onChange={store.setThemeColorStart} />
+                        <div className="popOverBetweenTag">
+                          <label>Theme Color End</label>
+                        </div>
+                        <ColorPickerTab label="" color={store.themeColorEnd} onChange={store.setThemeColorEnd} />
+                        <div className="popOverBetweenTag">
+                          <label>Text Button Color</label>
+                        </div>
+                        <ColorPickerTab label="" color={store.textButton} onChange={store.setTextButton} />
+                      </div>
+                    </div>
+                  </Popover>
                 </div>
               </div>
             </div>

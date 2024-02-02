@@ -27,11 +27,7 @@ const FileInputExample: React.FC = () => {
   return (
     <>
       <input type="file" accept=".jpg, .jpeg" onChange={handleFileChange} />
-      <div style={containerStyle}>
-
-      </div>
     </>
-
   );
 };
 

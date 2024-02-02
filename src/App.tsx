@@ -15,8 +15,8 @@ function App() {
       {/* <Counter/> */}
       {/* <ColorPicker /> */}
       {/* <ThemeTab/> */}
-      {/* <NewThemeTab /> */}
-      <Test/>
+      <NewThemeTab />
+      {/* <Test/> */}
       {/* <FileInputExample/> */}
     </>
   );

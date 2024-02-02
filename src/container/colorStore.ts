@@ -69,8 +69,8 @@ export const useColorStore = create<ColorStore>((set) => ({
     textOnMainBackground: hexToRgb('#00FFFF'),
     textOnBackground: hexToRgb('#FFF000'),
 
-    themeColorEnd: hexToRgb('#3105AB'),
-    themeColorStart: hexToRgb('#FFB258'),
+    themeColorEnd: hexToRgb('#FFB258'),
+    themeColorStart: hexToRgb('#3105AB'),
     textButton: hexToRgb('#FFFFFF'),
 
     idelColorEnd: hexToRgb('#808080'),

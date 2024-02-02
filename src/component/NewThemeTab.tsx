@@ -92,22 +92,7 @@ function NewThemeTab() {
                         width: '1800px',
                         height: '800px',
                         borderRadius: 3
-                    }}
-                >
-                    {/* <Typography id="modal-title" variant="h6" component="h2">
-                Rectangle Details
-            </Typography>
-            <IconButton
-                aria-label="close"
-                onClick={handleCloseModal}
-                sx={{ position: 'absolute', right: 8, top: 8 }}
-            >
-                <CloseIcon />
-            </IconButton>
-            <Typography id="modal-description" sx={{ mt: 2 }}>
-                This is the content of rectangle #{selectedRectangle}.
-            </Typography> */}
-
+                    }}>
 
                     <ColorPicker />
 
